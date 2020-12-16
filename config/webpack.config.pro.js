@@ -67,37 +67,35 @@ module.exports = {
     },
     optimization: {
         splitChunks: {
-            minSize:0,
-            chunks: 'all',
-            // maxInitialRequests: 3,
-            // cacheGroups: {
-                // vendors: {
-                //     chunks: 'async',
-                //     minSize: 0,
-                //     minChunks: 1,
-                //     test: /[\\/]node_modules[\\/]/,
-                //     priority: -10,
-                //     name: 'vendors',
-                // },
-                // common1: {
-                //     chunks: 'all',
-                //     minSize: 0,
-                //     test: /[\\/]src\/test[\\/]/,
-                //     minChunks: 1,
-                //     priority: -20,
-                //     reuseExistingChunk: true,
-                //     name: 'common1',
-                // },
-                // common2: {
-                //     chunks: 'all',
-                //     minSize: 0,
-                //     minChunks: 1,
-                //     test: /[\\/]src\/webpackTest[\\/]/,
-                //     priority: -20,
-                //     reuseExistingChunk: true,
-                //     name: 'common2',
-                // }
-            // }
+            maxInitialRequests: 3,
+            cacheGroups: {
+                vendors: {
+                    chunks: 'all',
+                    minSize: 0,
+                    minChunks: 1,
+                    test: /[\\/]node_modules[\\/]/,
+                    priority: -10,
+                    name: 'vendors',
+                },
+                common1: {
+                    chunks: 'all',
+                    minSize: 0,
+                    test: /[\\/]src\/test[\\/]/,
+                    minChunks: 1,
+                    priority: -20,
+                    reuseExistingChunk: true,
+                    name: 'common1',
+                },
+                common2: {
+                    chunks: 'all',
+                    minSize: 0,
+                    minChunks: 1,
+                    test: /[\\/]src\/webpackTest[\\/]/,
+                    priority: -20,
+                    reuseExistingChunk: true,
+                    name: 'common2',
+                }
+            }
         },
         runtimeChunk: {
             name: entrypoint => `runtime-${entrypoint.name}`,
