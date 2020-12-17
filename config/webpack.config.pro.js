@@ -8,7 +8,8 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 module.exports = {
     mode: "production",
     entry: {
-        webpackTest1: path.resolve(__dirname, '../src/webpackTest/webpackTest1.js'),
+        // webpackTest1: path.resolve(__dirname, '../src/webpackTest/webpackTest1.js'),
+        index: path.resolve(__dirname, '../index.js'),
     },
     devtool: false,
     output: {
