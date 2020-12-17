@@ -3,22 +3,19 @@ const path = require('path');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
     mode: "development",
     entry: {
-        index: path.resolve(__dirname, '../index.tsx')
+        index: path.resolve(__dirname, '../index.js'),
     },
     devtool: 'cheap-module-eval-source-map',
     output: {
-        path: path.resolve(__dirname, 'dist'),
+        path: path.resolve(__dirname, '../dist'),
         filename: 'static/js/[name].[contenthash:8].js',
-        publicPath:'/'
-        // chunkFilename: 'static/js/[name].[contenthash:8].chunk.js'
-    },
-    devServer: {
-        historyApiFallback: true,
-        publicPath: '/'
+        publicPath: '/',
+        chunkFilename: 'static/js/[name].[contenthash:8].js'
     },
     plugins: [
         new CleanWebpackPlugin(),
@@ -26,22 +23,19 @@ module.exports = {
             template: "./publish/index.html"
         }),
         new OptimizeCssAssetsPlugin({
-            assetNameRegExp: /\.css$/g,
             cssProcessor: require('cssnano'),
             cssProcessorPluginOptions: {
                 preset: ['default', {minifyFontValues: {removeQuotes: true}}],
             },
             cssProcessorOptions: {
-                map: {
-                    inline: true
-                }
+                map: false
             },
-            canPrint: true
         }),
         new MiniCssExtractPlugin({
             filename: 'static/css/file.[id].[contenthash:8].css',
             chunkFilename: 'static/css/chunk.[id].[contenthash:8].css',
         }),
+        // new BundleAnalyzerPlugin()
     ],
     resolve: {
         extensions: [".js", ".ts", ".tsx", ".json"]
@@ -49,14 +43,21 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.jsx?$/,
-                exclude: '/node-modules/',
-                include: [path.resolve('./src'), path.resolve('./axios')],
-                use: 'babel-loader'
-            },
-            {
-                test: /\.(ts|tsx)?$/,
-                use: "ts-loader"
+                test: /\.(js|mjs|jsx|ts|tsx)$/,
+                use: {
+                    loader: "babel-loader",
+                    options: {
+                        presets: [
+                            "@babel/preset-react",
+                            "@babel/preset-typescript"
+                        ],
+                        plugins: [
+                            "@babel/plugin-proposal-class-properties",
+                            "@babel/plugin-proposal-nullish-coalescing-operator",
+                            "@babel/plugin-proposal-optional-chaining"
+                        ]
+                    }
+                }
             },
             {
                 test: /\.(css|less)$/,
@@ -66,15 +67,33 @@ module.exports = {
     },
     optimization: {
         splitChunks: {
-            chunks: 'initial',
+            maxInitialRequests: 3,
             cacheGroups: {
-                vendor: {
-                    priority: 1,
-                    test: /node_modules/,
-                    chunks: 'initial',
-                    name: 'vendor-chunk',
+                vendors: {
+                    chunks: 'all',
                     minSize: 0,
-                    minChunks: 1
+                    minChunks: 1,
+                    test: /[\\/]node_modules[\\/]/,
+                    priority: -10,
+                    name: 'vendors',
+                },
+                common1: {
+                    chunks: 'all',
+                    minSize: 0,
+                    test: /[\\/]src\/test[\\/]/,
+                    minChunks: 1,
+                    priority: -20,
+                    reuseExistingChunk: true,
+                    name: 'common1',
+                },
+                common2: {
+                    chunks: 'all',
+                    minSize: 0,
+                    minChunks: 1,
+                    test: /[\\/]src\/webpackTest[\\/]/,
+                    priority: -20,
+                    reuseExistingChunk: true,
+                    name: 'common2',
                 }
             }
         },
