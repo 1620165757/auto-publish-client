@@ -8,9 +8,13 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 module.exports = {
     mode: "development",
     entry: {
-        index: path.resolve(__dirname, '../index.js'),
+        index: path.resolve(__dirname, '../index.tsx'),
     },
     devtool: 'cheap-module-eval-source-map',
+    devServer: {
+        contentBase: path.resolve(__dirname, 'dist'),
+        historyApiFallback:true
+    },
     output: {
         path: path.resolve(__dirname, '../dist'),
         filename: 'static/js/[name].[contenthash:8].js',

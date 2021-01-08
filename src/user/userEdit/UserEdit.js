@@ -8,7 +8,7 @@ class UserEdit extends React.Component {
 
     render() {
         return (
-            <div id='qiankun'/>
+            <div />
         )
     }
 }
