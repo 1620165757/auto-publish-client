@@ -4,4 +4,4 @@
  */
 import Index from "./Index/Index";
 
-export default Index
+export default Index;

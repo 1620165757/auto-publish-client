@@ -4,31 +4,34 @@
  */
 import React from "react";
 import {Layout, Menu} from "antd";
-import './styles.css'
+import "./styles.css";
 import menus from "../../configs/menus";
 import routers from "../../configs/routers/routers";
 import {Redirect, Route} from "react-router-dom";
-import {connect} from 'react-redux'
+import {connect} from "react-redux";
 
 const {Header, Sider, Content, Footer} = Layout;
 const {SubMenu} = Menu;
-const Index = (props) => {
+const Index = (props: any) => {
 
     const menuToggle = (path: string) => {
-        props.history.push(path)
+        props.history.push(path);
     };
 
     return (
         <Layout>
             <Header>
-                <div className=''>Header11111</div>
+                <div className=''>
+                    header
+                </div>
             </Header>
             <Layout>
                 <Sider theme="light">
-                    <Menu mode="inline"
-                          defaultSelectedKeys={["subMenu1_opt1"]}
-                          defaultOpenKeys={["subMenu1"]}
-                          style={{height: '100%'}}>
+                    <Menu
+                        mode="inline"
+                        defaultOpenKeys={[menus[0].key]}
+                        defaultSelectedKeys={[menus[0].children[0].key]}
+                        style={{height: "100%"}}>
                         {menus.map(v1 => (
                             v1.children.length > 0 ? (
                                 <SubMenu key={v1.key} title={v1.name}>
@@ -45,7 +48,7 @@ const Index = (props) => {
                     </Menu>
                 </Sider>
                 <Content>
-                    <Route path='/' exact render={() => <Redirect to={routers[0].path}/>}/>
+                    <Route path='/index' exact render={() => <Redirect to={routers[0].path}/>}/>
                     {routers.map(v => (
                         <Route key={v.name} path={v.path} component={v.component}/>
                     ))}
@@ -53,12 +56,12 @@ const Index = (props) => {
             </Layout>
             <Footer>footer</Footer>
         </Layout>
-    )
+    );
 };
 
 const mapStateToProps = (state) => {
-    return state
+    return state;
 };
 
-export default connect(mapStateToProps)(Index)
+export default connect(mapStateToProps)(Index);
 

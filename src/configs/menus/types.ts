@@ -4,7 +4,7 @@
  */
 export interface RouterType {
     name: string,
-    key: string | number,
+    key: string,
     path?: string,
     level: 1 | 2 | 3,
     children?: Array<RouterType>

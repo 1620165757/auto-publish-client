@@ -6,22 +6,22 @@ const initState = {
 
 (()=>{
     try{
-        initState.uer = JSON.parse(sessionStorage.getItem('userInfo')) || {}
+        initState.uer = JSON.parse(sessionStorage.getItem('userInfo')) || {};
     }catch (e) {
-        initState.uer = {}
+        initState.uer = {};
     }
 })();
 
 const userReducer = (state = initState, action) => {
     switch (action.type) {
-        case SAVE_USER:
-            return {
-                ...state,
-                user: action.payload
-            };
-        default:
-            return state
+    case SAVE_USER:
+        return {
+            ...state,
+            user: action.payload
+        };
+    default:
+        return state;
     }
 };
 
-export default userReducer
+export default userReducer;

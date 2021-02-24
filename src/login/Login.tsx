@@ -1,10 +1,10 @@
-import * as React from "react";
-import './styles.less'
-import {Button, Form, Input} from "antd";
-import httpRequest from "../utils/axios";
-import {setCookie} from "../utils";
-import {connect} from 'react-redux'
-import {SAVE_USER} from "../action/userAction";
+import * as React from 'react';
+import './styles.less';
+import {Button, Form, Input} from 'antd';
+import httpRequest from '../utils/axios';
+import {setCookie} from '../utils';
+import {connect} from 'react-redux';
+import {SAVE_USER} from '../action/userAction';
 
 const layout = {
     wrapperCol: {span: 24},
@@ -17,7 +17,7 @@ class Login extends React.Component<any, any> {
 
     onFinish = async values => {
         const response = await httpRequest.post('/login', {
-            account: values.username,
+            name: values.username,
             password: values.password
         });
         if (response.code === 1) {
@@ -27,7 +27,7 @@ class Login extends React.Component<any, any> {
                 type: SAVE_USER,
                 payload: response.data
             });
-            this.props.history.push('/user')
+            this.props.history.push('/index');
         }
     };
 
@@ -41,10 +41,10 @@ class Login extends React.Component<any, any> {
                 <div className='login-container'>
                     <div className='login-content'>
                         <Form {...layout}
-                              name="basic"
-                              initialValues={{remember: true}}
-                              onFinish={this.onFinish}
-                              onFinishFailed={this.onFinishFailed}>
+                            name="basic"
+                            initialValues={{remember: true}}
+                            onFinish={this.onFinish}
+                            onFinishFailed={this.onFinishFailed}>
                             <Form.Item label="" name="username" rules={[{required: true, message: '请输入用户名!'}]}>
                                 <Input placeholder='请输入用户名'/>
                             </Form.Item>
@@ -62,12 +62,12 @@ class Login extends React.Component<any, any> {
                     </div>
                 </div>
             </div>
-        )
+        );
     }
 }
 
 function mapStateToProps(state) {
-    return state
+    return state;
 }
 
-export default connect(mapStateToProps)(Login)
+export default connect(mapStateToProps)(Login);

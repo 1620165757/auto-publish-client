@@ -1,11 +1,11 @@
 #webpack优化
-#### 1.分离runtimeChunk
+### 1.分离runtimeChunk
 
     runtimeChunk: {
        name: entrypoint => `runtime-${entrypoint.name}`,
     },
     
-#### 2.分离公共模块(react、antd等)
+### 2.分离公共模块(react、antd等)
 
     cacheGroups: {
         vendor: {
@@ -18,7 +18,7 @@
         }
     }
 
-#### 3.分离代码(js、css)
+### 3.分离代码(js、css)
 
      mini-css-extract-plugin
      {
@@ -32,5 +32,10 @@
          ignoreOrder: false
      }),
      
-#### 4.压缩css
+### 4.压缩css
     
+    
+### 5.chunks
+async：表示从动态导入模块开始拆分
+initial：表示从入口文件拆分，如果多个入口文件同时引入一个文件，则单独拆分出来
+

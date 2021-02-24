@@ -1,4 +1,4 @@
-import React from "react"
+import React from 'react';
 
 /**
  * @author: zxs
@@ -9,8 +9,8 @@ class UserDetail extends React.Component {
     render() {
         return (
             <div>1111</div>
-        )
+        );
     }
 }
 
-export default UserDetail
+export default UserDetail;
